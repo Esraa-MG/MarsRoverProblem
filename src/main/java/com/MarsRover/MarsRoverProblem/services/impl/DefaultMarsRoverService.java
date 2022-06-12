@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.MarsRover.MarsRoverProblem.models.request.ControlReqModel;
+import com.MarsRover.MarsRoverProblem.models.request.ControlWithObstaclesReqModel;
 import com.MarsRover.MarsRoverProblem.models.request.PositionReqModel;
 import com.MarsRover.MarsRoverProblem.models.response.Position;
 import com.MarsRover.MarsRoverProblem.models.response.PositionResModel;
+import com.MarsRover.MarsRoverProblem.models.response.PositionWithObstaclesResModel;
 import com.MarsRover.MarsRoverProblem.services.CommandService;
 import com.MarsRover.MarsRoverProblem.services.MarsRoverService;
 
@@ -23,6 +25,17 @@ public class DefaultMarsRoverService implements MarsRoverService {
 
 		positionResModel.setNewPosition(commandService.translateCommand(controlReqModel.getCommand(),
 				mapPositionReqModelToPosition(controlReqModel.getCurrentPosition())));
+
+		return positionResModel;
+	}
+
+	@Override
+	public PositionWithObstaclesResModel getNextPositionWithObstacles(ControlWithObstaclesReqModel controlReqModel) {
+
+		PositionWithObstaclesResModel positionResModel = new PositionWithObstaclesResModel();
+
+		positionResModel.setNewPosition(
+				commandService.translateCommand(controlReqModel.getCommand(), controlReqModel, positionResModel));
 
 		return positionResModel;
 	}

@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.MarsRover.MarsRoverProblem.models.request.ControlReqModel;
+import com.MarsRover.MarsRoverProblem.models.request.ControlWithObstaclesReqModel;
 import com.MarsRover.MarsRoverProblem.models.response.PositionResModel;
+import com.MarsRover.MarsRoverProblem.models.response.PositionWithObstaclesResModel;
 import com.MarsRover.MarsRoverProblem.services.MarsRoverService;
 
 @RestController
@@ -27,6 +29,14 @@ public class MarsRoverController {
 	public ResponseEntity<PositionResModel> getNextPosition(@RequestBody @Valid ControlReqModel controlReqModel) {
 
 		return new ResponseEntity<>(marsRoverService.getNextPosition(controlReqModel), HttpStatus.OK);
+
+	}
+
+	@GetMapping("/move/obstacles")
+	public ResponseEntity<PositionWithObstaclesResModel> getNextPositionWithObstacles(
+			@RequestBody @Valid ControlWithObstaclesReqModel controlReqModel) {
+
+		return new ResponseEntity<>(marsRoverService.getNextPositionWithObstacles(controlReqModel), HttpStatus.OK);
 
 	}
 
